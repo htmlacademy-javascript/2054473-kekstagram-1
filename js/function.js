@@ -19,23 +19,23 @@ function getNumberFromString (sameString) {
 getNumberFromString('tgerg ef -4543.6,4');
 
 // Функция принимающая три параметра и возвращающая исходную строку, дополненную указанными символами до заданной длины
-const MAKE_NEW_STRING = (string, maxLength, symbol) => {
-  const DIFFERENCE = maxLength - string.length;
+const makeNewString = (string, maxLength, symbol) => {
+  const difference = maxLength - string.length;
   let newString = ''.concat(string);
   let newSymbol = symbol;
   if (string.length >= maxLength) {
     return string;
-  } else if (symbol.length >= DIFFERENCE) {
-    newSymbol = symbol.substr(0, DIFFERENCE);
+  } else if (symbol.length >= difference) {
+    newSymbol = symbol.substr(0, difference);
     newString = newSymbol.concat(string);
     return newString;
   }
-  newSymbol = symbol.slice(0, DIFFERENCE % symbol.length) + symbol.repeat(DIFFERENCE / symbol.length);
+  newSymbol = symbol.slice(0, difference % symbol.length) + symbol.repeat(difference / symbol.length);
   newString = newSymbol.concat(string);
   return newString;
 };
-MAKE_NEW_STRING('q', 4, 'werty');
+makeNewString('q', 4, 'werty');
 
 // Функция для проверки длины строки
-const CHECK_LENGTH = (enteredString, lengthLimit) => enteredString.length <= lengthLimit;
-CHECK_LENGTH('проверяемая строка', 20);
+const checkLength = (enteredString, lengthLimit) => enteredString.length <= lengthLimit;
+checkLength('проверяемая строка', 20);
