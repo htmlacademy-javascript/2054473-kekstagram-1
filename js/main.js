@@ -1,3 +1,3 @@
-import {createPhotoDescriptions} from './data-generator.js';
+import {renderPhotos} from './render-photos.js';
 
-createPhotoDescriptions();
+renderPhotos();
