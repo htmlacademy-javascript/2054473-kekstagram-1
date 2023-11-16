@@ -26,3 +26,4 @@ const createUniqueId = (min, max) => {
 const isEscapeKey = (key) => key === 'Escape';
 
 export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey};
+
