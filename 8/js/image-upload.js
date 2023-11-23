@@ -16,6 +16,7 @@ const closeImageUpload = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   preview.img.src = '';
+  imageUploadInput.value = '';
 };
 
 function onPopupEscKeydown (evt) {
