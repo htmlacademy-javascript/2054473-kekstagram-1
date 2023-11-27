@@ -35,9 +35,15 @@ const addNewImage = (file) => {
   reader.readAsDataURL(file);
 };
 
+const effectsPreview = document.querySelectorAll('.effects__preview');
+
 imageUploadInput.addEventListener('change', (evt) => {
   openImageUpload();
   addNewImage(evt.target.files[0]);
+  const uploadedPicture = document.querySelector('.img-upload__uploaded-picture');
+  effectsPreview.forEach((effect) => {
+    effect.style.backgroundImage = `url('${uploadedPicture.src}')`;
+  });
 });
 
 imageUploadCancel.addEventListener('click', closeImageUpload);
