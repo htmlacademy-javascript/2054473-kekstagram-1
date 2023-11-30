@@ -1,3 +1,6 @@
+import {sendData} from './api.js';
+import {showStatusModal} from './success-modal.js';
+
 const imageUploadForm = document.querySelector('.img-upload__form');
 
 const pristine = new Pristine(imageUploadForm, {
@@ -50,10 +53,37 @@ pristine.addValidator(
   validateComment,
   'длина комментария не может составлять больше 140 символов');
 
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
 
-imageUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    imageUploadForm.submit();
+const submitButton = imageUploadForm.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = async (evt) => {
+  try {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      await sendData(new FormData(evt.target));
+      showStatusModal('success');
+      imageUploadForm.reset();
+    }
+  } catch (err) {
+    showStatusModal('error');
   }
-});
+  unblockSubmitButton();
+};
+
+
+imageUploadForm.addEventListener('submit', setUserFormSubmit);

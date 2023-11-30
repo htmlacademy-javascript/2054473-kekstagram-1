@@ -33,7 +33,7 @@ const loadNewComments = (comments) => {
   };
 };
 
-let renderNewComments;
+let newComments;
 
 const openBigPicture = ({url, description, likes, comments}) => {
   bigPicture.classList.remove('hidden');
@@ -44,8 +44,8 @@ const openBigPicture = ({url, description, likes, comments}) => {
   document.body.classList.add('modal-open');
   commentsContainer.innerHTML = '';
   renderComments(comments);
-  renderNewComments = loadNewComments(comments);
-  commentsLoader.addEventListener('click', renderNewComments);
+  newComments = loadNewComments(comments);
+  commentsLoader.addEventListener('click', newComments);
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
@@ -55,7 +55,7 @@ const closeBigPicture = () => {
   commentCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.removeEventListener('keydown', onPopupEscKeydown);
-  commentsLoader.removeEventListener('click', renderNewComments);
+  commentsLoader.removeEventListener('click', newComments);
 };
 
 function onPopupEscKeydown (evt) {
@@ -65,4 +65,4 @@ function onPopupEscKeydown (evt) {
   }
 }
 
-export {openBigPicture, closeBigPicture};
+export {openBigPicture, closeBigPicture, onPopupEscKeydown};
