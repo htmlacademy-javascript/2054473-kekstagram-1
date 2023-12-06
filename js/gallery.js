@@ -7,8 +7,10 @@ const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const fragmentPhotos = document.createDocumentFragment();
+const savedContent = picturesContainer.innerHTML;
 
 const renderThumbnails = (pictures) => {
+  picturesContainer.innerHTML = savedContent;
   pictures.forEach(({url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
@@ -26,6 +28,7 @@ getData()
   .then((userPhotos) => {
     renderThumbnails(userPhotos);
     uploadedPhotos = userPhotos;
+    document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   })
   .catch((err) => {
     showAlert(err.message);
@@ -40,3 +43,5 @@ picturesContainer.addEventListener('click', (evt) => {
 const hidePictureButton = document.querySelector('.big-picture__cancel');
 
 hidePictureButton.addEventListener('click', closeBigPicture);
+
+export {renderThumbnails, uploadedPhotos};
