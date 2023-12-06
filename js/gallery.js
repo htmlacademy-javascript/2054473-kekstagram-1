@@ -7,10 +7,16 @@ const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const fragmentPhotos = document.createDocumentFragment();
-const savedContent = picturesContainer.innerHTML;
+
+const clearThumbnails = () => {
+  const pictures = picturesContainer.querySelectorAll('.picture');
+  if (pictures.length !== 0) {
+    pictures.forEach((picture) => picture.remove());
+  }
+};
 
 const renderThumbnails = (pictures) => {
-  picturesContainer.innerHTML = savedContent;
+  clearThumbnails();
   pictures.forEach(({url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
