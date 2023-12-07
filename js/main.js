@@ -5,3 +5,4 @@ import './slider.js';
 import './scale-control.js';
 import './api.js';
 import './success-modal.js';
+import './filter.js';

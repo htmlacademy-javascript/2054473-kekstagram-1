@@ -70,17 +70,20 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
+const succesStatus = 'success';
+const errorStatus = 'error';
+
 const setUserFormSubmit = async (evt) => {
   try {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
       await sendData(new FormData(evt.target));
-      showStatusModal('success');
+      showStatusModal(succesStatus);
       imageUploadForm.reset();
     }
   } catch (err) {
-    showStatusModal('error');
+    showStatusModal(errorStatus);
   }
   unblockSubmitButton();
 };
