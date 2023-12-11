@@ -1415,3 +1415,16 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__field-wrapper--error {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #6B4E2F;
+  color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+}
