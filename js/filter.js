@@ -22,7 +22,7 @@ const getFilteredPhotos = (filter, data) => {
   }
 };
 
-const makeDebounce = debounce((data) => {
+const debouncedRender = debounce((data) => {
   renderThumbnails(data);
 }, RERENDER_DELAY);
 
@@ -34,7 +34,7 @@ const filterPhotos = (evt, data) => {
     activeButton.classList.add('img-filters__button--active');
     const chosenFilter = activeButton.getAttribute('id').slice(7);
     const filteredPhotos = getFilteredPhotos(chosenFilter, data);
-    makeDebounce(filteredPhotos);
+    debouncedRender(filteredPhotos);
   }
 };
 

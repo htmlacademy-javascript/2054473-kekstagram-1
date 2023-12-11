@@ -80,8 +80,15 @@ const createInitialSlider = () => {
 };
 
 const filterItems = document.querySelectorAll('.effects__item');
-const picturePreview = document.querySelector('.img-upload__preview');
+const picturePreview = document.querySelector('.img-upload__preview img');
 let chosenEffect;
+
+const setDefault = () => {
+  sliderElement.classList.add('hidden');
+  sliderContainer.classList.add('hidden');
+  picturePreview.style.transform = 'scale(1)';
+  picturePreview.style.filter = '';
+};
 
 const changeFilters = () => {
   createInitialSlider();
@@ -89,9 +96,7 @@ const changeFilters = () => {
     item.addEventListener('change', (evt) => {
       chosenEffect = evt.target.value;
       if (chosenEffect === 'none') {
-        sliderElement.classList.add('hidden');
-        sliderContainer.classList.add('hidden');
-        picturePreview.style.filter = '';
+        setDefault();
       } else {
         sliderElement.classList.remove('hidden');
         sliderContainer.classList.remove('hidden');
@@ -110,3 +115,5 @@ sliderElement.noUiSlider.on('update', () => {
   effectLevel.value = sliderElement.noUiSlider.get();
   picturePreview.style.filter = getFilterSettings(chosenEffect, effectLevel.value);
 });
+
+export {setDefault};
