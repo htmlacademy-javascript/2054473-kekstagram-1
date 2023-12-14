@@ -1,51 +1,51 @@
 import {isEscapeKey} from './util.js';
+import {setDefault} from './slider.js';
 
-const imageUploadForm = document.querySelector('.img-upload__overlay');
-const imageUploadInput = document.querySelector('.img-upload__input');
-const imageUploadCancel = imageUploadForm.querySelector('.img-upload__cancel');
-let preview;
+const uploadModal = document.querySelector('.img-upload__overlay');
+const uploadForm = document.querySelector('.img-upload__form');
+const fileChooser = document.querySelector('.img-upload__input[type=file]');
+const imageUploadCancel = uploadModal.querySelector('.img-upload__cancel');
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const preview = uploadModal.querySelector('.img-upload__preview img');
 
 const openImageUpload = () => {
-  imageUploadForm.classList.remove('hidden');
+  uploadModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onFormEscKeydown);
 };
 
 const closeImageUpload = () => {
-  imageUploadForm.classList.add('hidden');
+  uploadModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onFormEscKeydown);
-  preview = imageUploadForm.querySelector('.img-upload__preview');
-  preview.src = '';
+  setDefault();
 };
 
 function onFormEscKeydown (evt) {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeImageUpload();
-    imageUploadForm.reset();
+    uploadForm.reset();
   }
 }
 
-const addNewImage = (file) => {
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const imageUrl = e.target.result;
-    preview = imageUploadForm.querySelector('.img-upload__preview');
-    preview.innerHTML = `<img class="img-upload__uploaded-picture" src="${imageUrl}" alt="Preview">`;
-  };
-  reader.readAsDataURL(file);
+const effectsPreview = document.querySelectorAll('.effects__preview');
+const changeFiltersBackground = (objURL) => {
+  effectsPreview.forEach((effect) => {
+    effect.style.backgroundImage = `url('${objURL}')`;
+  });
 };
 
-const effectsPreview = document.querySelectorAll('.effects__preview');
-
-imageUploadInput.addEventListener('change', (evt) => {
+fileChooser.addEventListener('change', () => {
   openImageUpload();
-  addNewImage(evt.target.files[0]);
-  const uploadedPicture = document.querySelector('.img-upload__uploaded-picture');
-  effectsPreview.forEach((effect) => {
-    effect.style.backgroundImage = `url('${uploadedPicture.src}')`;
-  });
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    const photoURL = URL.createObjectURL(file);
+    preview.src = photoURL;
+    changeFiltersBackground(photoURL);
+  }
 });
 
 imageUploadCancel.addEventListener('click', closeImageUpload);
