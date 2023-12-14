@@ -10,9 +10,9 @@ const hideStatusModal = () => {
   document.removeEventListener('click', onOutsideClick);
   document.addEventListener('keydown', onFormEscKeydown);
 };
-
+const statusSuccess = 'success';
 const showStatusModal = (status) => {
-  if (status === 'success') {
+  if (status === statusSuccess) {
     closeImageUpload();
   } else {
     document.removeEventListener('keydown', onFormEscKeydown);
