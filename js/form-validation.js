@@ -12,6 +12,8 @@ const pristine = new Pristine(imageUploadForm, {
   errorTextClass: 'img-upload__field-wrapper--error' // Класс для элемента с текстом ошибки
 }, false);
 
+const MAX_COMMENT_LENGTH = 140;
+const MAX_COUNT_TAG = 5;
 
 const isTagValid = (hashtag) => hashtag.match(/^#[a-zа-яё0-9]{1,19}$/i) || hashtag === '';
 
@@ -24,7 +26,7 @@ const isTagUnique = (hashtagArray) => {
 };
 
 const validateHashtags = (hashtags) => splitHashtags(hashtags).every(isTagValid)
-  && splitHashtags(hashtags).length < 5
+  && splitHashtags(hashtags).length < MAX_COUNT_TAG
   && isTagUnique(splitHashtags(hashtags));
 
 const getHashtagErrorMessage = (hashtags) => {
@@ -33,7 +35,7 @@ const getHashtagErrorMessage = (hashtags) => {
     errorMessages.push('введён невалидный тег');
   }
 
-  if (splitHashtags(hashtags).length > 5) {
+  if (splitHashtags(hashtags).length > MAX_COUNT_TAG) {
     errorMessages.push('превышено количество тегов');
   }
 
@@ -49,12 +51,12 @@ pristine.addValidator(
   validateHashtags,
   getHashtagErrorMessage);
 
-const validateComment = (comment) => comment.length <= 140;
+const validateComment = (comment) => comment.length <= MAX_COMMENT_LENGTH;
 
 pristine.addValidator(
   imageUploadForm.querySelector('.text__description'),
   validateComment,
-  'длина комментария не может составлять больше 140 символов');
+  `длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`);
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -84,10 +86,10 @@ const setUserFormSubmit = async (evt) => {
       if (error !== null) {
         error.remove();
       }
+      showStatusModal(statusSuccess);
       blockSubmitButton();
       await sendData(new FormData(evt.target));
       document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-      showStatusModal(statusSuccess);
       imageUploadForm.reset();
     }
   } catch (err) {
