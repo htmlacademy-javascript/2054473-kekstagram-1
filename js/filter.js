@@ -13,11 +13,11 @@ const compareComments = (photoA, photoB) => {
 
 const getFilteredPhotos = (filter, data) => {
   switch (filter) {
-    case 'filter-default':
+    case 'default':
       return data;
-    case 'filter-random':
+    case 'random':
       return shuffleArray(data.slice()).slice(0, RANDOM_PHOTOS_COUNT);
-    case 'filter-discussed':
+    case 'discussed':
       return data.slice().sort(compareComments);
   }
 };
@@ -32,7 +32,7 @@ const filterPhotos = (evt, data) => {
     previousButton.classList.remove('img-filters__button--active');
     const activeButton = evt.target;
     activeButton.classList.add('img-filters__button--active');
-    const chosenFilter = activeButton.getAttribute('id');
+    const chosenFilter = activeButton.getAttribute('id').slice(7);
     const filteredPhotos = getFilteredPhotos(chosenFilter, data);
     makeDebounce(filteredPhotos);
   }
