@@ -29,10 +29,6 @@ function onFormEscKeydown (evt) {
   }
 }
 
-const onUploadCancelClick = () => {
-  hideModal();
-};
-
 const effectsPreview = document.querySelectorAll('.effects__preview');
 const changeFiltersBackground = (objURL) => {
   effectsPreview.forEach((effect) => {
