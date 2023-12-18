@@ -21,7 +21,7 @@ const closeImageUpload = () => {
   setDefault();
 };
 
-function onFormEscKeydown (evt) {
+function onFormEscKeydown ('keydown', (evt)) {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeImageUpload();
